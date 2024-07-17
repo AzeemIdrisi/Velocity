@@ -154,7 +154,6 @@ export const updateProfile = async (request, response) => {
 export const addProfileImage = async (request, response) => {
   try {
     const imageFile = request.file;
-    console.log(imageFile);
     if (!imageFile) {
       return response.status(400).send("File is required");
     }
