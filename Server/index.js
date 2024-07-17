@@ -22,6 +22,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
+// Serve static files to user when it hit the specified route
+app.use("/uploads/profiles", express.static("uploads/profiles"));
 //setting up routes
 
 app.use("/api/auth", authRoutes);
