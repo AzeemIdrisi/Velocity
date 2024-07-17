@@ -8,12 +8,13 @@ import { toast } from "sonner";
 import { apiClient } from "@/lib/api-client";
 import { LOGIN_ROUTE, SIGNUP_ROUTE } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
+import { useAppStore } from "@/store/store";
 function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const navigate = useNavigate();
+  const { setUserInfo } = useAppStore();
 
   const validateSignup = () => {
     if (!email.length) {
@@ -58,6 +59,9 @@ function Auth() {
 
       if (response.data.user.id) {
         toast.success("Logged in successfully.");
+
+        // Storing user info in State Management
+        setUserInfo(response.data.user);
         //Checking if user has done profile setup
         if (response.data.user.profileSetup) {
           navigate("/chat");
@@ -82,6 +86,10 @@ function Auth() {
       );
       if (response.status === 201) {
         toast.success("Account created successfully");
+
+        // Storing user info in State Management
+        setUserInfo(response.data.user);
+
         // Redirecting user to complete their profile
         navigate("/profile");
       }
