@@ -15,7 +15,6 @@ const PrivateRoute = ({ children }) => {
 const AuthRoute = ({ children }) => {
   const { userInfo } = useAppStore();
   const isAuthenticated = !!userInfo;
-  console.log({ isAuthenticated });
   return isAuthenticated ? <Navigate to="/chat" /> : children;
 };
 function App() {
@@ -48,7 +47,6 @@ function App() {
   useEffect(() => {
     // App is in loading state while userInfo is not present and being fetched
     if (!userInfo) {
-      console.log("Calling get user info");
       getUserInfo();
     } else {
       //Stop loading if data is present
