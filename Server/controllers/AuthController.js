@@ -188,41 +188,28 @@ export const addProfileImage = async (request, response) => {
     return response.status(500).send("Internal Server Error");
   }
 };
-export const deleteProfileImage = async (request, response) => {
+export const removeProfileImage = async (request, response) => {
   try {
     const userID = request.userID;
-    const { firstName, lastName, color } = request.body;
 
-    if (!firstName || !lastName) {
-      return response.status(400).send("All fields are required");
-    }
+    const user = await User.findById(userID);
 
-    const user = await User.findByIdAndUpdate(
-      userID,
-      {
-        firstName,
-        lastName,
-        color,
-        profileSetup: true,
-      },
-      { new: true, runValidators: true } // Send the updated data back
-    );
     if (!user) {
       return response.status(404).send("User not found with this ID");
     }
 
+    // Deleting file from our server
+    if (user.image) {
+      unlinkSync(user.image);
+    }
+
+    // Removing path from the user db
+    user.image = null;
+
+    await user.save();
+
     // sending user info back when sucess code 200
-    return response.status(200).json({
-      user: {
-        id: user.id,
-        email: user.email,
-        profileSetup: user.profileSetup,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        image: user.image,
-        color: user.color,
-      },
-    });
+    return response.status(200).send("Profile photo removed successfully");
   } catch (error) {
     console.log({ error });
     return response.status(500).send("Internal Server Error");

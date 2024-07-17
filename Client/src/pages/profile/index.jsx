@@ -13,6 +13,7 @@ import {
   HOST,
   ADD_PROFILE_IMAGE_ROUTE,
   UPDATE_PROFILE_ROUTE,
+  REMOVE_PROFILE_IMAGE_ROUTE,
 } from "@/utils/constants";
 
 function Profile() {
@@ -84,7 +85,7 @@ function Profile() {
 
   const handleFileInputClick = () => {
     fileInputRef.current.click();
-    toast("working");
+    toast("Opening File Explorer");
   };
 
   const handleImageChange = async (event) => {
@@ -103,7 +104,21 @@ function Profile() {
       }
     }
   };
-  const deleteImage = async (event) => {};
+  const removeImage = async () => {
+    try {
+      const response = await apiClient.delete(REMOVE_PROFILE_IMAGE_ROUTE, {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        toast.success(response.data);
+        setUserInfo({ ...userInfo, image: null });
+        setImage(null);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="bg-[#1b1c24] h-[100vh] flex items-center justify-center flex-col gap-10 ">
       <div className="flex flex-col gap-10 w-[80vw] md:w-max">
@@ -137,8 +152,8 @@ function Profile() {
             </Avatar>
             {hovered && (
               <div
-                onClick={image ? deleteImage : handleFileInputClick}
-                className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer"
+                onClick={image ? removeImage : handleFileInputClick}
+                className="absolute h-32 w-32 md:w-48 md:h-48  flex items-center justify-center bg-black/50 rounded-full cursor-pointer"
               >
                 {image ? (
                   <FaTrash className="text-white text-3xl cursor-pointer" />

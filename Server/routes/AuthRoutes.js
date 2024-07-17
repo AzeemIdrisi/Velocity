@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {
   addProfileImage,
-  deleteProfileImage,
   getUserInfo,
   login,
+  removeProfileImage,
   signup,
   updateProfile,
 } from "../controllers/AuthController.js";
@@ -26,6 +26,6 @@ authRoutes.post(
   upload.single("profile-image"), // Middleware used to upload images
   addProfileImage
 );
-authRoutes.delete("/delete-profile-image", verifyToken, deleteProfileImage);
+authRoutes.delete("/remove-profile-image", verifyToken, removeProfileImage);
 
 export default authRoutes;
