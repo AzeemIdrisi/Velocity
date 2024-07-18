@@ -13,7 +13,7 @@ function EmptyChatContainer() {
       />
       <div className="flex flex-col gap-5 items-center mt-10 lg:text-4xl text-3xl text-opacity-80 text-white text-center transition-all duration-300">
         <h3 className="poppins-medium">
-          <span className="text-red-600">Velocity</span> Chat App
+          <span className="text-red-500">Velocity</span> Chat App
         </h3>
       </div>
     </div>

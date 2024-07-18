@@ -21,7 +21,7 @@ function Chat() {
   return (
     <div className="h-[100vh] flex overflow-hidden text-white">
       <ContactsContainer />
-      <EmptyChatContainer />
+      {/* <EmptyChatContainer /> */}
       <ChatsContainer />
     </div>
   );
