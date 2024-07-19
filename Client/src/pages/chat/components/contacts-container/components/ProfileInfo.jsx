@@ -35,13 +35,13 @@ function ProfileInfo() {
     }
   };
   return (
-    <div className="absolute bottom-0 h-16 flex items-center justify-between w-full px-10 bg-[#2a2b33]">
+    <div className="absolute bottom-0 h-16 flex items-center justify-between w-full px-5 bg-[#2a2b33]">
       <div className="flex items-center justify-center gap-3">
         <div className="w-12 h-12 relative">
           <Avatar className="h-12 w-12 ">
             {userInfo.image ? (
               <AvatarImage
-                className="object-cover w-full h-full bg-black"
+                className="object-cover rounded-full w-full h-full bg-black"
                 src={`${HOST}/${userInfo.image}`}
                 alt="profile"
               />
@@ -58,7 +58,7 @@ function ProfileInfo() {
             )}
           </Avatar>
         </div>
-        <div>
+        <div className="poppins-medium">
           {userInfo.firstName && userInfo.lastName
             ? userInfo.firstName + " " + userInfo.lastName
             : ""}

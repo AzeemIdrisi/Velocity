@@ -8,7 +8,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
   <>
     <App />
-    <Toaster richColors toastOptions theme="light" expand />
+    <Toaster richColors toastOptions theme="light" expand closeButton />
   </>
   // </React.StrictMode>,
 );

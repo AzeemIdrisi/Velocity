@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import authRoutes from "./routes/AuthRoutes.js";
+import contactRoutes from "./routes/ContactRoutes.js";
 
 dotenv.config();
 
@@ -27,6 +28,8 @@ app.use("/uploads/profiles", express.static("uploads/profiles"));
 //setting up routes
 
 app.use("/api/auth", authRoutes);
+app.use("/api/contacts", contactRoutes);
+
 const server = app.listen(port, () => {
   console.log(`Server started at : http://localhost:${port}`);
 });
