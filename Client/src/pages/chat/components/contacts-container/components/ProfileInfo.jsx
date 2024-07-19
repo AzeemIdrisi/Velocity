@@ -3,7 +3,6 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { HOST, LOGOUT_ROUTE } from "@/utils/constants";
 import { getColor } from "@/lib/utils";
 import { FiEdit2, FiLogOut } from "react-icons/fi";
-import { IoLogOut } from "react-icons/io5";
 import {
   Tooltip,
   TooltipContent,

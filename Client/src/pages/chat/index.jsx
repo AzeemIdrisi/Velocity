@@ -22,7 +22,7 @@ function Chat() {
     <div className="h-[100vh] flex overflow-hidden text-white">
       <ContactsContainer />
       {/* <EmptyChatContainer /> */}
-      <ChatsContainer />
+      {/* <ChatsContainer /> */}
     </div>
   );
 }

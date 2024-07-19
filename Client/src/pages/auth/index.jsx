@@ -110,7 +110,12 @@ function Auth() {
               <img className="h-[100px]" src={Victory} />
             </div>
             <p className="font-medium text-center">
-              Get started with the 🚀 Velocity Chat App
+              Get started with the
+              <span className="playwrite-dk-uloopet text-sm">
+                {" "}
+                LightSpeed
+              </span>{" "}
+              Chat App
             </p>
           </div>
           <div className="flex items-center justify-center w-full">
