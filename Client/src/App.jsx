@@ -12,11 +12,13 @@ const PrivateRoute = ({ children }) => {
   const isAuthenticated = !!userInfo;
   return isAuthenticated ? children : <Navigate to="/auth" />;
 };
+
 const AuthRoute = ({ children }) => {
   const { userInfo } = useAppStore();
   const isAuthenticated = !!userInfo;
   return isAuthenticated ? <Navigate to="/chat" /> : children;
 };
+
 function App() {
   // As soon as site is loaded check for JWT Token and
   // if it exists send it to the server for it's validity
