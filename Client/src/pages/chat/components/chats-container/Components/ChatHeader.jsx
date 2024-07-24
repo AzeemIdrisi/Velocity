@@ -3,6 +3,7 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import React from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { getColor } from "@/lib/utils";
+import { HOST } from "@/utils/constants";
 
 function ChatHeader() {
   const { closeChat, selectedChatData, selectedChatType } = useAppStore();

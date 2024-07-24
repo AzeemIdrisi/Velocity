@@ -23,6 +23,7 @@ import { SEARCH_CONTACTS_ROUTE } from "@/utils/constants";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { useAppStore } from "@/store/store";
+import { HOST } from "@/utils/constants";
 
 function NewDM() {
   const { setSelectedChatData, setSelectedChatType } = useAppStore();
