@@ -8,7 +8,11 @@ import { useAppStore } from "@/store/store";
 import ContactList from "@/components/contact-list";
 
 function ContactsContainer() {
-  const { setDirectMessagesContact, directMessagesContact } = useAppStore();
+  const {
+    setDirectMessagesContact,
+    directMessagesContact,
+    selectedChatMessages,
+  } = useAppStore();
 
   useEffect(() => {
     const getContactsForDmList = async () => {
@@ -17,7 +21,6 @@ function ContactsContainer() {
           withCredentials: true,
         });
         if (response.data.contacts) {
-          console.log(response.data.contacts);
           setDirectMessagesContact(response.data.contacts);
         }
       } catch (error) {
@@ -25,7 +28,8 @@ function ContactsContainer() {
       }
     };
     getContactsForDmList();
-  }, []);
+  }, [selectedChatMessages]);
+
   return (
     <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full">
       <div className="poppins-medium  m-5 text-xl lg:text-2xl text-center flex items-center justify-center">

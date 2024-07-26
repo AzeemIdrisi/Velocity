@@ -36,14 +36,15 @@ export const searchContacts = async (request, response) => {
 
 export const getContactsForDmList = async (request, response) => {
   try {
-    const currentUserID = request.userID;
+    let currentUserID = request.userID;
 
-    const userId = new mongoose.Types.ObjectId(currentUserID);
+    // Convert currentUserID to ObjectId
+    currentUserID = new mongoose.Types.ObjectId(currentUserID);
 
     const contacts = await Message.aggregate([
       {
         $match: {
-          $or: [{ sender: userId }, { receiver: userId }],
+          $or: [{ sender: currentUserID }, { receiver: currentUserID }],
         },
       },
       {
@@ -55,7 +56,7 @@ export const getContactsForDmList = async (request, response) => {
         $group: {
           _id: {
             $cond: {
-              if: { $eq: ["sender", userId] },
+              if: { $eq: ["$sender", currentUserID] },
               then: "$receiver",
               else: "$sender",
             },
@@ -83,6 +84,11 @@ export const getContactsForDmList = async (request, response) => {
           lastName: "$contactInfo.lastName",
           image: "$contactInfo.image",
           color: "$contactInfo.color",
+        },
+      },
+      {
+        $match: {
+          _id: { $ne: currentUserID }, // Exclude the current user
         },
       },
       {

@@ -12,14 +12,14 @@ function ChatHeader() {
     closeChat();
   }
   return (
-    <div className="h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-20">
+    <div className="h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-20 py-8">
       <div className="flex gap-5 items-center w-full justify-between">
         <div className="flex gap-3 items-center justify-center">
           <div className="w-12 h-12 relative ">
             <Avatar className="h-12 w-12 ">
               {contact.image ? (
                 <AvatarImage
-                  className="object-cover w-full h-full bg-black"
+                  className="object-cover rounded-full w-full h-full bg-black"
                   src={`${HOST}/${contact.image}`}
                   alt="profile"
                 />
@@ -38,7 +38,7 @@ function ChatHeader() {
           </div>
           <div>
             {selectedChatType === "contact" ? (
-              <div className="poppins-medium text-xl">
+              <div className="poppins-regular text-lg">
                 {contact.firstName && contact.lastName
                   ? contact.firstName + " " + contact.lastName
                   : contact.email}

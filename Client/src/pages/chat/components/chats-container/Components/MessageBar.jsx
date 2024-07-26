@@ -37,11 +37,21 @@ function MessageBar() {
         fileUrl: undefined,
       });
     }
+    setMessage("");
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent the default behavior (e.g., form submission or new line)
+      handleSendMessage();
+    }
+  };
+
   return (
     <div className="bg-[#1c1d25] h-[10vh] flex justify-center item-center px-8 mb-6 gap-6 ">
       <div className="flex flex-1 bg-[#2a2b33] rounded-md items-center gap-5 pr-5">
         <input
+          onKeyDown={handleKeyDown}
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
