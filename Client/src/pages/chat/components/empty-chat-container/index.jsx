@@ -14,7 +14,7 @@ function EmptyChatContainer() {
       <div className="flex gap-1 items-center mt-10 lg:text-4xl text-3xl text-opacity-80 text-white text-center transition-all duration-300">
         <img className="h-10 w-10 mt-1" src="src/assets/image.png" />
         <h3 className="poppins-medium">
-          In<span className=" text-blue-500 ">finity</span>
+          Dev<span className=" text-blue-500 ">Chat</span>
         </h3>
       </div>
     </div>
