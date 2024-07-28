@@ -27,6 +27,7 @@ app.use(express.json());
 
 // Serve static files to user when it hit the specified route
 app.use("/uploads/profiles", express.static("uploads/profiles"));
+app.use("/uploads/files", express.static("uploads/files"));
 //setting up routes
 
 app.use("/api/auth", authRoutes);

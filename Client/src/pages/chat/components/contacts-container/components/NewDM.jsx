@@ -113,7 +113,7 @@ function NewDM() {
                       <Avatar className="h-12 w-12 ">
                         {contact.image ? (
                           <AvatarImage
-                            className="object-cover w-full h-full bg-black"
+                            className="object-cover rounded-full w-full h-full bg-black"
                             src={`${HOST}/${contact.image}`}
                             alt="profile"
                           />
