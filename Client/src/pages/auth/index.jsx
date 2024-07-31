@@ -44,59 +44,67 @@ function Auth() {
   };
   const handleLogin = async () => {
     if (validateLogin()) {
-      const response = await apiClient.post(
-        LOGIN_ROUTE,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true, // Required to recieved cookie from server
+      try {
+        const response = await apiClient.post(
+          LOGIN_ROUTE,
+          {
+            email,
+            password,
+          },
+          {
+            withCredentials: true, // Required to recieved cookie from server
+          }
+        );
+
+        // if User exist
+
+        if (response.data.user.id) {
+          toast.success("Logged in successfully.");
+
+          // Storing user info in State Management
+          setUserInfo(response.data.user);
+          //Checking if user has done profile setup
+          if (response.data.user.profileSetup) {
+            navigate("/chat");
+          } else {
+            navigate("/profile");
+          }
         }
-      );
-
-      // if User exist
-
-      if (response.data.user.id) {
-        toast.success("Logged in successfully.");
-
-        // Storing user info in State Management
-        setUserInfo(response.data.user);
-        //Checking if user has done profile setup
-        if (response.data.user.profileSetup) {
-          navigate("/chat");
-        } else {
-          navigate("/profile");
-        }
+        console.log(response.data);
+      } catch (error) {
+        toast.error(error.response.data);
+        console.log({ error });
       }
     }
   };
 
   const handleSignup = async () => {
-    if (validateSignup()) {
-      const response = await apiClient.post(
-        SIGNUP_ROUTE,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true, // Required to recieved cookie from server
+    try {
+      if (validateSignup()) {
+        const response = await apiClient.post(
+          SIGNUP_ROUTE,
+          {
+            email,
+            password,
+          },
+          {
+            withCredentials: true, // Required to recieved cookie from server
+          }
+        );
+        if (response.status === 201) {
+          toast.success("Account created successfully");
+
+          // Storing user info in State Management
+          setUserInfo(response.data.user);
+
+          // Redirecting user to complete their profile
+          navigate("/profile");
         }
-      );
-      if (response.status === 201) {
-        toast.success("Account created successfully");
-
-        // Storing user info in State Management
-        setUserInfo(response.data.user);
-
-        // Redirecting user to complete their profile
-        navigate("/profile");
       }
-
+    } catch (error) {
       // //if account is not created then
-      // console.log(response.status);
-      // toast.error(response.statusText);
+      toast.error(error.response.data);
+      console.log({ error });
     }
   };
 
