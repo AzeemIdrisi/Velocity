@@ -16,19 +16,22 @@ import {
 import { getColor } from "@/lib/utils";
 import { FaPlus } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
-import Lottie from "react-lottie";
-import { animationDefaultOptions } from "@/lib/utils";
+
 import { apiClient } from "@/lib/api-client";
-import { GET_ALL_CONTACTS, SEARCH_CONTACTS_ROUTE } from "@/utils/constants";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import {
+  CREATE_CHANNEL_ROUTE,
+  GET_ALL_CONTACTS,
+  SEARCH_CONTACTS_ROUTE,
+} from "@/utils/constants";
+
 import { useAppStore } from "@/store/store";
 import { HOST } from "@/utils/constants";
 import { Button } from "@/components/ui/button";
 import MultipleSelector from "@/components/ui/multipleselect";
 
 function CreateChannel() {
-  const { setSelectedChatData, setSelectedChatType } = useAppStore();
+  const { setSelectedChatData, setSelectedChatType, addChannel } =
+    useAppStore();
   const [openNewChannelModal, setOpenNewChannelModal] = useState(false);
   const [searchedContacts, setSearchedContacts] = useState([]);
   const [allContacts, setAllContacts] = useState([]);
@@ -50,35 +53,32 @@ function CreateChannel() {
     getData();
   }, []);
 
-  const createChannel = async () => {};
-  const handleSearchContacts = async (searchTerm) => {
+  const createChannel = async () => {
     try {
-      if (searchTerm.length > 0) {
+      if (selectedContacts.length > 0 && channelName.length > 0) {
         const response = await apiClient.post(
-          SEARCH_CONTACTS_ROUTE,
+          CREATE_CHANNEL_ROUTE,
           {
-            searchTerm,
+            name: channelName,
+            members: selectedContacts.map((contact) => contact.value),
           },
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
 
-        if (response.status === 200 && response.data.contacts) {
-          setSearchedContacts(response.data.contacts);
+        if (response.status === 201) {
+          setChannelName("");
+          setSelectedContacts([]);
+          setOpenNewChannelModal(false);
+          addChannel(response.data.channel);
         }
-      } else {
-        setSearchedContacts([]);
       }
     } catch (error) {
       console.log({ error });
     }
   };
 
-  const selectNewContactHandler = (contact) => {
-    setOpenNewChannelModal(false);
-    setSearchedContacts([]);
-    setSelectedChatData(contact);
-    setSelectedChatType("contact");
-  };
   return (
     <>
       <TooltipProvider>

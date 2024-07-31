@@ -33,12 +33,25 @@ export const SocketProvider = ({ children }) => {
           (selectedChatData._id === message.sender._id ||
             selectedChatData._id === message.receiver._id)
         ) {
-          console.log("new message", message);
+          console.log("New Message Received", message);
+          addMessage(message);
+        }
+      };
+      const handleReceiveChannelMessage = (message) => {
+        const { selectedChatData, selectedChatType, addMessage } =
+          useAppStore.getState();
+
+        if (
+          selectedChatType !== undefined &&
+          selectedChatData._id === message.channelID
+        ) {
+          console.log("New Channel Message", message);
           addMessage(message);
         }
       };
 
       socket.current.on("receiveMessage", handleReceiveMessage);
+      socket.current.on("receiveChannelMessage", handleReceiveChannelMessage);
       return () => {
         socket.current.disconnect();
       };

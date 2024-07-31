@@ -16,25 +16,31 @@ function ChatHeader() {
       <div className="flex gap-5 items-center w-full justify-between">
         <div className="flex gap-3 items-center justify-center">
           <div className="w-12 h-12 relative ">
-            <Avatar className="h-12 w-12 ">
-              {contact.image ? (
-                <AvatarImage
-                  className="object-cover rounded-full w-full h-full bg-black"
-                  src={`${HOST}/${contact.image}`}
-                  alt="profile"
-                />
-              ) : (
-                <div
-                  className={`uppercase h-12 w-12 text-lg border-[1px] flex items-center justify-center rounded-full ${getColor(
-                    contact.color
-                  )}`}
-                >
-                  {contact.firstName
-                    ? contact.firstName.split("").shift()
-                    : contact.email.split("").shift()}
-                </div>
-              )}
-            </Avatar>
+            {selectedChatType === "contact" ? (
+              <Avatar className="h-12 w-12 ">
+                {contact.image ? (
+                  <AvatarImage
+                    className="object-cover rounded-full w-full h-full bg-black"
+                    src={`${HOST}/${contact.image}`}
+                    alt="profile"
+                  />
+                ) : (
+                  <div
+                    className={`uppercase h-12 w-12 text-lg border-[1px] flex items-center justify-center rounded-full ${getColor(
+                      contact.color
+                    )}`}
+                  >
+                    {contact.firstName
+                      ? contact.firstName.split("").shift()
+                      : contact.email.split("").shift()}
+                  </div>
+                )}
+              </Avatar>
+            ) : (
+              <div className="bg-[#ffffff22] h-12 w-12 flex items-center justify-center rounded-full">
+                #
+              </div>
+            )}
           </div>
           <div>
             {selectedChatType === "contact" ? (
@@ -44,7 +50,9 @@ function ChatHeader() {
                   : contact.email}
               </div>
             ) : (
-              ""
+              <div className="poppins-regular text-lg">
+                {selectedChatData.name}
+              </div>
             )}
           </div>
         </div>

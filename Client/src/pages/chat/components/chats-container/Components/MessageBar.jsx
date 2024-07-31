@@ -47,6 +47,15 @@ function MessageBar() {
         messageType: "text",
         fileUrl: undefined,
       });
+    } else {
+      console.log("Emitting channel message");
+      socket.emit("sendChannelMessage", {
+        sender: userInfo.id,
+        content: message,
+        channelID: selectedChatData._id,
+        messageType: "text",
+        fileUrl: undefined,
+      });
     }
     setMessage("");
   };
@@ -78,6 +87,14 @@ function MessageBar() {
               sender: userInfo.id,
               content: undefined,
               receiver: selectedChatData._id,
+              messageType: "file",
+              fileUrl: response.data.filePath,
+            });
+          } else {
+            socket.emit("sendChannelMessage", {
+              sender: userInfo.id,
+              content: undefined,
+              channelID: selectedChatData._id,
               messageType: "file",
               fileUrl: response.data.filePath,
             });

@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import Message from "./models/MessagesModel.js";
+import Channel from "./models/ChannelModel.js";
 
 const setupSocket = (server) => {
   const io = new Server(server, {
@@ -40,6 +41,38 @@ const setupSocket = (server) => {
       }
       if (senderSocketId) {
         io.to(senderSocketId).emit("receiveMessage", messageData);
+      }
+    });
+
+    socket.on("sendChannelMessage", async (message) => {
+      const { channelID } = message;
+
+      const createdMessaage = await Message.create(message);
+      const messageData = await Message.findById(createdMessaage._id)
+        .populate("sender", "id email firstName lastName image color")
+        .exec();
+
+      await Channel.findByIdAndUpdate(channelID, {
+        $push: { message: createdMessaage._id },
+      });
+
+      const channel = await Channel.findById(channelID).populate("members");
+
+      const finalData = { ...messageData._doc, channelID: channel._id };
+
+      if (channel && channel.members) {
+        channel.members.forEach((member) => {
+          const memberSocketID = UserSocketMap.get(member._id.toString());
+
+          if (memberSocketID) {
+            io.to(memberSocketID).emit("receiveChannelMessage", finalData);
+          }
+        });
+        const adminSocketID = UserSocketMap.get(channel.admin._id.toString());
+
+        if (adminSocketID) {
+          io.to(adminSocketID).emit("receiveChannelMessage", finalData);
+        }
       }
     });
 
