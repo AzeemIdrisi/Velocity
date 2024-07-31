@@ -53,7 +53,7 @@ const setupSocket = (server) => {
         .exec();
 
       await Channel.findByIdAndUpdate(channelID, {
-        $push: { message: createdMessaage._id },
+        $push: { messages: createdMessaage._id },
       });
 
       const channel = await Channel.findById(channelID).populate("members");

@@ -47,3 +47,30 @@ export const getUsersChannels = async (request, response) => {
     return response.status(500).send("Internal Server Error");
   }
 };
+
+export const getChannelMessages = async (request, response) => {
+  console.log("Getting channel mesages");
+  try {
+    const { channelID } = request.params;
+
+    if (!channelID) {
+      return response.status(400).send("Channel ID is required");
+    }
+    const channel = await Channel.findById(channelID).populate({
+      path: "messages",
+      populate: {
+        path: "sender",
+        select: "firstName lastName image color email _id",
+      },
+    });
+    if (!channel) {
+      return response
+        .status(404)
+        .send("Channel not found with the provided ID");
+    }
+    return response.status(200).json({ messages: channel.messages });
+  } catch (error) {
+    console.log({ error });
+    return response.status(500).send("Internal Server Error");
+  }
+};
