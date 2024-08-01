@@ -42,7 +42,7 @@ function ProfileInfo() {
             {userInfo.image ? (
               <AvatarImage
                 className="object-cover rounded-full w-full h-full bg-black"
-                src={`${HOST}/${userInfo.image}`}
+                src={`${userInfo.image}`}
                 alt="profile"
               />
             ) : (

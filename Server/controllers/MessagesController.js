@@ -30,14 +30,15 @@ export const uploadFiles = async (request, response) => {
     if (!file) {
       return response.status(400).send("File is required");
     }
-    const date = Date.now();
+    console.log(file);
+    // const date = Date.now();
 
-    let filename = `uploads/files/${date}-${file.originalname}`;
+    // let filename = `uploads/files/${date}-${file.originalname}`;
 
-    // mkdirSync(`uploads/files/${date}`, { recursive: true });
-    renameSync(file.path, filename);
+    // // mkdirSync(`uploads/files/${date}`, { recursive: true });
+    // renameSync(file.path, filename);
 
-    return response.status(200).json({ filePath: filename });
+    return response.status(200).json({ filePath: file.path });
   } catch (error) {
     console.log({ error });
     return response.status(500).send("Internal Server Error");

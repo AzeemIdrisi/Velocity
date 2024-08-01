@@ -21,7 +21,7 @@ function ChatHeader() {
                 {contact.image ? (
                   <AvatarImage
                     className="object-cover rounded-full w-full h-full bg-black"
-                    src={`${HOST}/${contact.image}`}
+                    src={`${contact.image}`}
                     alt="profile"
                   />
                 ) : (

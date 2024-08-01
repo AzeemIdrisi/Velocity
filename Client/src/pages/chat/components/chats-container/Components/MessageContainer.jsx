@@ -70,7 +70,7 @@ function MessageContainer() {
     setIsDownloading(true);
     setFileDownloadProgress(0);
     try {
-      const response = await apiClient.get(`${HOST}/${file}`, {
+      const response = await apiClient.get(`${file}`, {
         responseType: "blob",
         onDownloadProgress: (ProgressEvent) => {
           const { loaded, total } = ProgressEvent;
@@ -118,7 +118,7 @@ function MessageContainer() {
               {message.sender.image ? (
                 <AvatarImage
                   className="object-cover rounded-full w-full h-full bg-black"
-                  src={`${HOST}/${message.sender.image}`}
+                  src={`${message.sender.image}`}
                   alt="profile"
                 />
               ) : (
@@ -152,11 +152,7 @@ function MessageContainer() {
                 }}
                 className="cursor-pointer"
               >
-                <img
-                  src={`${HOST}/${message.fileUrl}`}
-                  height="300"
-                  width="300"
-                />
+                <img src={`${message.fileUrl}`} height="300" width="300" />
               </div>
             ) : (
               <div className="flex justify-center items-center gap-5">
@@ -213,11 +209,7 @@ function MessageContainer() {
                 }}
                 className="cursor-pointer"
               >
-                <img
-                  src={`${HOST}/${message.fileUrl}`}
-                  height="300"
-                  width="300"
-                />
+                <img src={`${message.fileUrl}`} height="300" width="300" />
               </div>
             ) : (
               <div className="flex justify-center items-center gap-5">
@@ -277,10 +269,7 @@ function MessageContainer() {
       {showImage && (
         <div className="fixed z-[1000] top-0 left-0 h-[100vh] w-[100vw] flex items-center justify-center backdrop-blur-lg flex-col">
           <div>
-            <img
-              src={`${HOST}/${imageUrl}`}
-              className="h-[80vh] w-full bg-cover"
-            />
+            <img src={`${imageUrl}`} className="h-[80vh] w-full bg-cover" />
           </div>
           <div className="flex gap-5 fixed top-0 mt-5">
             <button

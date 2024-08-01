@@ -34,7 +34,7 @@ function Profile() {
       setSelectedColor(userInfo.color);
     }
     if (userInfo.image) {
-      setImage(`${HOST}/${userInfo.image}`);
+      setImage(`${userInfo.image}`);
     }
   }, [userInfo]);
   const saveChanges = async () => {

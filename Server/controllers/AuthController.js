@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/UserModel.js";
 import { compare } from "bcrypt";
 import { renameSync, unlinkSync } from "fs";
+import { deleteProfileImage } from "../routes/AuthRoutes.js";
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
 const createToken = (email, userID) => {
@@ -164,19 +165,21 @@ export const addProfileImage = async (request, response) => {
       return response.status(400).send("File is required");
     }
 
-    // If image is recieved rename it before storing its path in database
-    const date = Date.now();
-    let fileName = "uploads/profiles/" + date + imageFile.originalname;
+    console.log(imageFile);
 
-    // Rename the mutter generated random filename with the new filename on tha actual file location
-    renameSync(imageFile.path, fileName);
+    // If image is recieved rename it before storing its path in database
+    // const date = Date.now();
+    // let fileName = "uploads/profiles/" + date + imageFile.originalname;
+
+    // // Rename the mutter generated random filename with the new filename on tha actual file location
+    // renameSync(imageFile.path, fileName);
 
     const userID = request.userID;
 
     const user = await User.findByIdAndUpdate(
       userID,
       {
-        image: fileName,
+        image: imageFile.path,
       },
       { new: true, runValidators: true } // Send the updated data back
     );
@@ -193,6 +196,12 @@ export const addProfileImage = async (request, response) => {
     return response.status(500).send("Internal Server Error");
   }
 };
+
+const extractPublicIdFromUrl = (url) => {
+  const regex = /\/v\d+\/(.+)\.[a-z]+$/;
+  const matches = url.match(regex);
+  return matches ? matches[1] : null;
+};
 export const removeProfileImage = async (request, response) => {
   try {
     const userID = request.userID;
@@ -205,7 +214,7 @@ export const removeProfileImage = async (request, response) => {
 
     // Deleting file from our server
     if (user.image) {
-      unlinkSync(user.image);
+      deleteProfileImage(extractPublicIdFromUrl(user.image));
     }
 
     // Removing path from the user db
