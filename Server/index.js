@@ -50,3 +50,10 @@ mongoose
   .catch((e) => {
     console.log("MongoDB Connection Failed", e);
   });
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to Velocity",
+    author: "Azeem Idrisi - https://github.com/AzeemIdrisi",
+  });
+});
