@@ -94,3 +94,19 @@
   font-weight: 400;
   font-style: normal;
 }
+
+.futura {
+  font-family: "Futura PT Book";
+}
+
+.futura-light {
+  font-family: "Futura PT Light";
+}
+
+.futura-medium {
+  font-family: "Futura PT Medium";
+}
+
+.futura-demi {
+  font-family: "Futura PT Demi";
+}

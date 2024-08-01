@@ -114,11 +114,14 @@ function Auth() {
         <div className="flex flex-col gap-10 items-center justify-center">
           <div className="flex flex-col items-center justify-center ">
             <div className="flex items-center justify-center">
-              <h1 className="text-3xl font-bold lg:text-5xl">Welcome</h1>
-              <img className="h-[100px]" src={Victory} />
+              {/* <img
+                className="h-[50px] mr-1"
+                src="src/assets/fast-forward copy.png"
+              /> */}
+              <h1 className="font-bold text-3xl lg:text-4xl">Welcome</h1>
             </div>
             <p className="font-medium text-center">
-              Get started with the Velocity Chat App
+              Create an account or Login to get started
             </p>
           </div>
           <div className="flex items-center justify-center w-full">
@@ -185,8 +188,9 @@ function Auth() {
             </Tabs>
           </div>
         </div>
-        <div className=" hidden xl:flex items-center justify-center ">
-          <img src={Background} className="h-[400px]" />
+        <div className=" hidden xl:flex items-center justify-center  xl:flex-col">
+          <img src="src/assets/fast-forward copy.png" className="h-[200px]" />
+          <h1 className="poppins-medium text-3xl  lg:text-5xl">Velocity</h1>
         </div>
       </div>
     </div>
