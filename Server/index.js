@@ -57,3 +57,5 @@ app.get("/", (req, res) => {
     author: "Azeem Idrisi - https://github.com/AzeemIdrisi",
   });
 });
+
+export default app;
