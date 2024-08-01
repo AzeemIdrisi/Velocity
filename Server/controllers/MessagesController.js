@@ -32,9 +32,9 @@ export const uploadFiles = async (request, response) => {
     }
     const date = Date.now();
 
-    let filename = `uploads/files/${date}/${file.originalname}`;
+    let filename = `uploads/files/${date}-${file.originalname}`;
 
-    mkdirSync(`uploads/files/${date}`, { recursive: true });
+    // mkdirSync(`uploads/files/${date}`, { recursive: true });
     renameSync(file.path, filename);
 
     return response.status(200).json({ filePath: filename });
