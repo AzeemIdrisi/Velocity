@@ -97,7 +97,7 @@ function MessageContainer() {
   const renderChannelMessage = (message) => {
     const chatStyle =
       message.sender._id === userInfo.id
-        ? "bg-[#8417ff]/5 text-[#8417ff]/90 border-[#8417ff]/50"
+        ? "bg-[#3B82F6]/20 text-white border-[#3B82F6]/50"
         : "bg-[#2a2b33]/5 text-white/80 border-[#ffffff]/20";
     return (
       <div
@@ -182,7 +182,7 @@ function MessageContainer() {
   const renderDmMessage = (message) => {
     const chatStyle =
       message.sender !== selectedChatData._id
-        ? "bg-[#8417ff]/5 text-[#8417ff]/90 border-[#8417ff]/50"
+        ? "bg-[#3B82F6]/20 text-white border-[#3B82F6]/50"
         : "bg-[#2a2b33]/5 text-white/80 border-[#ffffff]/20";
     return (
       <div

@@ -125,7 +125,7 @@ function CreateChannel() {
           <div>
             <Button
               onClick={createChannel}
-              className="w-full bg-purple-700 hover:bg-purple-900 transition-all duration-300"
+              className="w-full bg-[#3B82F6]/60 hover:bg-[#3B82F6]/30 transition-all duration-300"
             >
               Create Channel{" "}
             </Button>

@@ -216,7 +216,7 @@ function Profile() {
         <div className="w-full">
           <Button
             onClick={saveChanges}
-            className="h-16 w-full bg-purple-700 hover:bg-purple-900 transition-all duration-300"
+            className="h-16 w-full bg-[#3B82F6]/60 hover:bg-[#3B82F6]/30 transition-all duration-300"
           >
             Save Changes
           </Button>
