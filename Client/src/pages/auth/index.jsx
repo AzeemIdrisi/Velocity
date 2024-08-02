@@ -189,7 +189,10 @@ function Auth() {
           </div>
         </div>
         <div className=" hidden xl:flex items-center justify-center  xl:flex-col">
-          <img src="src/assets/fast-forward copy.png" className="h-[200px]" />
+          <img
+            src="../../src/assets/fast-forward copy.png"
+            className="h-[200px]"
+          />
           <h1 className="poppins-medium text-3xl  lg:text-5xl">Velocity</h1>
         </div>
       </div>
