@@ -53,7 +53,7 @@ function ContactsContainer() {
       <div className="poppins-medium  m-5 text-xl lg:text-2xl text-center flex items-center justify-center">
         <img
           className="h-7 w-7 mr-1"
-          src="../../../src/assets/fast-forward copy.png"
+          src={"/static/images/velocity-logo.png"}
         />
         <h1>Velocity</h1>
       </div>

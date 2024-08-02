@@ -12,7 +12,7 @@ function EmptyChatContainer() {
         options={animationDefaultOptions}
       />
       <div className="flex gap-1 items-center mt-10 lg:text-4xl text-3xl text-opacity-80 text-white text-center transition-all duration-300">
-        <img className="h-10 w-10 " src="" />
+        <img className="h-10 w-10 " src={"/static/images/velocity-logo.png"} />
         <h3 className="poppins-medium text-white">
           Velocity<span className=" text-blue-500 "></span>
         </h3>

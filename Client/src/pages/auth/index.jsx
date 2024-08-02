@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Victory from "@/assets/victory.svg";
-import Background from "../../assets/login2.png";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -189,10 +188,7 @@ function Auth() {
           </div>
         </div>
         <div className=" hidden xl:flex items-center justify-center  xl:flex-col">
-          <img
-            src="../../src/assets/fast-forward copy.png"
-            className="h-[200px]"
-          />
+          <img src={"/static/images/velocity-logo.png"} className="h-[200px]" />
           <h1 className="poppins-medium text-3xl  lg:text-5xl">Velocity</h1>
         </div>
       </div>
