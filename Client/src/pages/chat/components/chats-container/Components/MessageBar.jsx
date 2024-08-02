@@ -140,6 +140,7 @@ function MessageBar() {
         </button>
         <input
           type="file"
+          accept=".png, .jpg, .jpeg, .svg, .webp, .pdf"
           className="hidden"
           ref={fileInputRef}
           onChange={handleAttachmentChange}

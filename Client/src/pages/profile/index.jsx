@@ -171,7 +171,7 @@ function Profile() {
               ref={fileInputRef}
               onChange={handleImageChange}
               name="profile-image"
-              aceept=".png, .jpg, .jpeg, .svg, .webp"
+              accept=".png, .jpg, .jpeg, .svg, .webp"
               className="hidden"
             />
           </div>
