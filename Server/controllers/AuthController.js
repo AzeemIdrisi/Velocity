@@ -165,8 +165,6 @@ export const addProfileImage = async (request, response) => {
       return response.status(400).send("File is required");
     }
 
-    console.log(imageFile);
-
     // If image is recieved rename it before storing its path in database
     // const date = Date.now();
     // let fileName = "uploads/profiles/" + date + imageFile.originalname;

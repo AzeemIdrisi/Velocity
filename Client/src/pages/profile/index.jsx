@@ -91,6 +91,10 @@ function Profile() {
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
+      if (file.size > 10000000) {
+        toast.error("File size must not exceed 10MB");
+        return;
+      }
       const formData = new FormData();
       formData.append("profile-image", file);
 

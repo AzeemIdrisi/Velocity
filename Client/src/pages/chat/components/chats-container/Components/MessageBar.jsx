@@ -8,6 +8,7 @@ import { useSocket } from "@/context/SocketContext";
 import { apiClient } from "@/lib/api-client";
 import { UPLOAD_FILE_ROUTE } from "@/utils/constants";
 import { data } from "autoprefixer";
+import { toast } from "sonner";
 
 function MessageBar() {
   const [message, setMessage] = useState("");
@@ -70,6 +71,11 @@ function MessageBar() {
     try {
       const file = event.target.files[0];
       if (file) {
+        //Checking if file size is not greater than 50mb
+        if (file.size > 50000000) {
+          toast.error("File size must not exceed 50MB");
+          return;
+        }
         const formData = new FormData();
         formData.append("file", file);
 
@@ -103,6 +109,7 @@ function MessageBar() {
       }
     } catch (error) {
       setIsUploading(false);
+      console.log("Error encountered");
       console.log({ error });
     }
   };
