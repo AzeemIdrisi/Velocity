@@ -22,15 +22,15 @@
 
 # Features 
 
-* Fully Responsive
+* Fully responsive
 * Realtime messaging
-* Group Chats
+* Group chats
 * Supports images and files upload/download
 * Images preview and Download functionality
 * Set/Remove profile picture
 * Private components protection
 * Mandatory profile setup
-* JWT Authentication
+* JWT authentication
 
 
 # Screenshots
