@@ -6,6 +6,7 @@ import Profile from "./pages/profile";
 import { useAppStore } from "./store/store";
 import { apiClient } from "./lib/api-client";
 import { GET_USER_INFO } from "./utils/constants";
+import { RotatingLines } from "react-loader-spinner";
 
 const PrivateRoute = ({ children }) => {
   const { userInfo } = useAppStore();
@@ -58,7 +59,18 @@ function App() {
 
   if (loading) {
     return (
-      <div>
+      <div className="w-full h-[100vh] flex flex-col gap-5 justify-center items-center text-blue-500 poppins-medium lg:text-4xl">
+        <RotatingLines
+          visible={true}
+          height="50"
+          width="50"
+          strokeColor="#3B82F6"
+          strokeWidth="5"
+          animationDuration="1"
+          ariaLabel="rotating-lines-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
         <h1>Loading...</h1>
       </div>
     );
