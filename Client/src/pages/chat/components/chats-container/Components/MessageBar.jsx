@@ -40,6 +40,10 @@ function MessageBar() {
     setMessage((msg) => msg + emoji.emoji);
   };
   const handleSendMessage = async () => {
+    if (message.length == 0) {
+      toast.error("Cannot send empty message");
+      return;
+    }
     if (selectedChatType === "contact") {
       socket.emit("sendMessage", {
         sender: userInfo.id,
