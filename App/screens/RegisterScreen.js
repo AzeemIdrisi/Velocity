@@ -21,7 +21,7 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [authenticating, setAuthenticating] = useState(false);
-  const userCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   const handleRegister = async () => {
     if (!email || !password || !confirmpassword) {
@@ -43,7 +43,7 @@ const RegisterScreen = ({ navigation }) => {
       if (response && response.status === 201) {
         const token = extractJWT(response.headers);
         AsyncStorage.setItem("token", token);
-        userCtx.setUserInfo(response.data.user);
+        authCtx.setUserInfo(response.data.user);
       } else {
         setAuthenticating(false);
 

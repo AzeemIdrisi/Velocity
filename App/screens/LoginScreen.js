@@ -20,7 +20,7 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authenticating, setAuthenticating] = useState(false);
-  const userCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -38,7 +38,7 @@ const LoginScreen = ({ navigation }) => {
       if (response && response.status === 200) {
         const token = extractJWT(response.headers);
         AsyncStorage.setItem("token", token);
-        userCtx.setUserInfo(response.data.user);
+        authCtx.setUserInfo(response.data.user);
       } else {
         setAuthenticating(false);
         Alert.alert("Login Failed", response.data);

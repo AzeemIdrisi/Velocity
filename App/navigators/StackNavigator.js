@@ -1,5 +1,4 @@
-import { View, Text } from "react-native";
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LoginScreen from "../screens/LoginScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RegisterScreen from "../screens/RegisterScreen";
@@ -8,6 +7,7 @@ import { AuthContext } from "../store/auth-context";
 import { GetUserInfo } from "../utils/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,23 +27,19 @@ function AuthenticatedStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Contacts" component={ContactsScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
     </Stack.Navigator>
   );
 }
 
-async function fetchTokenFromDevice() {
-  console.log("\n\nfetching...");
-  const token = await AsyncStorage.getItem("token");
-  return token.toString();
-}
 const StackNavigator = () => {
   const [loading, setLoading] = useState(true);
-  const userCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   async function fetchTokenFromDevice() {
     const token = await AsyncStorage.getItem("token");
     if (token) {
-      userCtx.setToken(token);
+      authCtx.setToken(token);
     }
     return token;
   }
@@ -60,7 +56,7 @@ const StackNavigator = () => {
         console.log("Received response : ", response.data.user);
 
         if (response.status === 200 && response.data.user) {
-          userCtx.setUserInfo(response.data.user);
+          authCtx.setUserInfo(response.data.user);
           setLoading(false);
         }
       } else {
@@ -76,7 +72,7 @@ const StackNavigator = () => {
 
   //Checking for the first time if device contains token
   useEffect(() => {
-    if (!userCtx.isAuthenticated) {
+    if (!authCtx.isAuthenticated) {
       fetchUserInfo();
     } else {
       setLoading(false);
@@ -86,7 +82,7 @@ const StackNavigator = () => {
   if (loading) {
     return <LoadingOverlay>Authenticating</LoadingOverlay>;
   }
-  return userCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />;
+  return authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />;
 };
 
 export default StackNavigator;

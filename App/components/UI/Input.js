@@ -6,7 +6,7 @@ const Input = ({ placeholder, title, isPassword, value, stateUpdater }) => {
     <View className="mt-2 ">
       <Text className="text-xl font-semibold text-gray-500 ml-5">{title}</Text>
       <TextInput
-        className="text-lg w-[350] h-[60px] border-2 px-4 py-2 border-gray-400 focus:border-blue-300 rounded-xl my-2 transition-all duration-300"
+        className=" w-[350] border-2 px-4 py-4 border-gray-400 focus:border-blue-300 rounded-xl my-2"
         placeholder={placeholder}
         secureTextEntry={isPassword}
         value={value}
@@ -14,6 +14,7 @@ const Input = ({ placeholder, title, isPassword, value, stateUpdater }) => {
         placeholderTextColor="#929292"
         autoCapitalize="none"
         autoCorrect={false}
+        allowFontScaling={true}
       />
     </View>
   );
