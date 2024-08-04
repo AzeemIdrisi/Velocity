@@ -61,3 +61,35 @@ export const UpdateProfile = async (token, firstName, lastName) => {
     return error.response;
   }
 };
+export const AddProfileImage = async (token, formData) => {
+  try {
+    const response = await axios.post(
+      BACKEND_URL + "/add-profile-image",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log("Auth.js", { error });
+    return error.response;
+  }
+};
+export const RemoveProfileImage = async (token) => {
+  try {
+    const response = await axios.delete(BACKEND_URL + "/remove-profile-image", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.log("Auth.js", { error });
+    return error.response;
+  }
+};

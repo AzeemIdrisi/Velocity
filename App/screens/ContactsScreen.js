@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import ButtonX from "../components/UI/ButtonX";
 import { AuthContext } from "../store/auth-context";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const ContactsScreen = ({ navigation }) => {
   const authCtx = useContext(AuthContext);
@@ -18,14 +19,33 @@ const ContactsScreen = ({ navigation }) => {
     if (!isLoading && authCtx.userInfo && !authCtx.userInfo.profileSetup) {
       console.log("Profile not setup, Going to profile page");
       navigation.replace("Profile");
-      console.log("Navigation initiated");
     }
   }, [authCtx.userInfo, navigation, isLoading]);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Connections",
+      headerRight: () => (
+        <MaterialIcons
+          onPress={authCtx.logout}
+          name="logout"
+          size={24}
+          color="black"
+        />
+      ),
+      headerLeft: () => (
+        <MaterialIcons
+          onPress={() => navigation.navigate("Profile")}
+          name="account-circle"
+          size={24}
+          color="black"
+        />
+      ),
+    });
+  }, []);
   return (
     <View>
       <Text>ContactsScreen</Text>
-      <ButtonX onPress={authCtx.logout}>Logout</ButtonX>
     </View>
   );
 };
