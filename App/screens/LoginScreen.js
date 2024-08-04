@@ -56,10 +56,17 @@ const LoginScreen = ({ navigation }) => {
     try {
       setAuthenticating(true);
       const response = await UserLogin(email, password);
-      if (response.status === 200) {
+      if (response && response.status === 200) {
         const token = extractJWT(response.headers);
         AsyncStorage.setItem("token", token);
         userCtx.setUserInfo(response.data.user);
+      } else {
+        setAuthenticating(false);
+
+        Alert.alert(
+          "Authentication Failed",
+          "Please check your credentials and try again."
+        );
       }
     } catch (error) {
       setAuthenticating(false);

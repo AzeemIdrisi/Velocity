@@ -42,6 +42,9 @@ const StackNavigator = () => {
 
   async function fetchTokenFromDevice() {
     const token = await AsyncStorage.getItem("token");
+    if (token) {
+      userCtx.setToken(token);
+    }
     return token;
   }
 
@@ -81,7 +84,7 @@ const StackNavigator = () => {
     } else {
       setLoading(false);
     }
-  }, [userCtx.setUserInfo, userCtx.userInfo]);
+  }, []);
 
   if (loading) {
     return <LoadingOverlay>Authenticating</LoadingOverlay>;

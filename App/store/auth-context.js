@@ -6,10 +6,13 @@ export const AuthContext = createContext({
   logout: () => {},
   userInfo: null,
   setUserInfo: () => {},
+  token: null,
+  setToken: () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState();
+  const [token, setToken] = useState();
 
   const setUserInformation = (userData) => {
     setUserInfo(userData);
@@ -20,11 +23,19 @@ export const AuthContextProvider = ({ children }) => {
     setUserInfo(null);
   };
 
+  const setTokenInformation = (token) => {
+    {
+      setToken(token);
+    }
+  };
+
   const value = {
     isAuthenticated: !!userInfo,
     logout: logout,
     userInfo: userInfo,
     setUserInfo: setUserInformation,
+    token: token,
+    setToken: setTokenInformation,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
