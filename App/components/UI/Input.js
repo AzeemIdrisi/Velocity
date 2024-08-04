@@ -12,6 +12,8 @@ const Input = ({ placeholder, title, isPassword, value, stateUpdater }) => {
         value={value}
         onChangeText={(text) => stateUpdater(text)}
         placeholderTextColor="#929292"
+        autoCapitalize="none"
+        autoCorrect={false}
       />
     </View>
   );

@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useContext } from "react";
-import { AuthContext } from "../store/auth-context";
 
 const BACKEND_URL = "https://velocity-gn4l.onrender.com/api/auth";
 
@@ -13,6 +11,19 @@ export const UserLogin = async (email, password) => {
     return response;
   } catch (error) {
     console.log("Auth.js", { error });
+    return error.response;
+  }
+};
+export const UserRegister = async (email, password) => {
+  try {
+    const response = await axios.post(BACKEND_URL + "/signup", {
+      email,
+      password,
+    });
+    return response;
+  } catch (error) {
+    console.log("Auth.js", { error });
+    return error.response;
   }
 };
 export const GetUserInfo = async (token) => {

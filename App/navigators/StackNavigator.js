@@ -54,13 +54,10 @@ const StackNavigator = () => {
     try {
       const token = await fetchTokenFromDevice();
       if (token) {
-        console.log("Fetching user info using token");
+        console.log("Token found on device, Fetching user info using token");
         const response = await GetUserInfo(token);
 
-        console.log(
-          "Token found on device getting response : ",
-          response.data.user
-        );
+        console.log("Received response : ", response.data.user);
 
         if (response.status === 200 && response.data.user) {
           userCtx.setUserInfo(response.data.user);
