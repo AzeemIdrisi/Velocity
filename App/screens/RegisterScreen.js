@@ -1,10 +1,13 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React from "react";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View className="flex-1 justify-center items-center">
       <Text>RegisterScreen</Text>
+      <Pressable onPress={() => navigation.replace("Login")}>
+        <Text>Login</Text>
+      </Pressable>
     </View>
   );
 };
