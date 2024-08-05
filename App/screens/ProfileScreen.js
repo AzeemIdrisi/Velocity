@@ -197,6 +197,13 @@ const ProfileScreen = ({ navigation }) => {
         />
         <ButtonX onPress={handleSubmit}>Submit</ButtonX>
       </View>
+      <View className="flex-row flex-1 justify-center items-center">
+        <Image
+          className="h-[20] w-[20]"
+          source={require("../assets/velocity-logo.png")}
+        />
+        <Text className="text-center font-bold text-base ml-1">Velocity</Text>
+      </View>
     </KeyboardAvoidingView>
   );
 };

@@ -25,7 +25,11 @@ function AuthStack() {
 }
 function AuthenticatedStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
       <Stack.Screen name="Contacts" component={ContactsScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
     </Stack.Navigator>
