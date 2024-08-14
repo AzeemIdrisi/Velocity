@@ -62,6 +62,9 @@ const StackNavigator = () => {
         if (response.status === 200 && response.data.user) {
           authCtx.setUserInfo(response.data.user);
           setLoading(false);
+        } else {
+          setLoading(false);
+          console.log("Authentication failed");
         }
       } else {
         setLoading(false);
