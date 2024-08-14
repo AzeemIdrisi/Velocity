@@ -1,4 +1,12 @@
-import { View, Text, Modal, Image, Alert, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Modal,
+  Image,
+  Alert,
+  ScrollView,
+  Platform,
+} from "react-native";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import ButtonX from "../components/UI/ButtonX";
 import { AuthContext } from "../store/auth-context";
@@ -31,7 +39,7 @@ const ContactsScreen = ({ navigation }) => {
       headerTitle: "Connections",
       headerRight: () => (
         <MaterialIcons
-          onPress={authCtx.logout}
+          onPress={handleLogout}
           name="logout"
           size={24}
           color="black"
@@ -48,6 +56,18 @@ const ContactsScreen = ({ navigation }) => {
     });
   }, []);
 
+  function handleLogout() {
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      {
+        text: "Cancel",
+        style: Platform.OS === "android" && "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: () => authCtx.logout(),
+      },
+    ]);
+  }
   function selectContact() {
     setModalVisible(true);
   }
@@ -121,7 +141,15 @@ const ContactsScreen = ({ navigation }) => {
               )}
               {searchedContacts.length > 0 &&
                 searchedContacts.map((contact) => (
-                  <ContactItem key={contact._id} contact={contact} />
+                  <ContactItem
+                    key={contact._id}
+                    contact={contact}
+                    onPress={() => {
+                      navigation.navigate("DMScreen", { contact: contact });
+                      setModalVisible(false);
+                      setSearchedContacts([]);
+                    }}
+                  />
                 ))}
             </View>
           </ScrollView>

@@ -1,10 +1,13 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 
-const ContactItem = ({ contact }) => {
+const ContactItem = ({ contact, onPress }) => {
   return (
-    <View>
-      <View className="flex-row gap-5 items-start m-1">
+    <Pressable
+      onPress={onPress}
+      className="active:bg-gray-200 justify-center p-4"
+    >
+      <View className="flex-row gap-5 items-start">
         <View>
           {contact.image ? (
             <Image
@@ -29,7 +32,7 @@ const ContactItem = ({ contact }) => {
           <Text>{contact.email}</Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
