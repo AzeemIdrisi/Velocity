@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const AUTH_ROUTE = "https://velocity-gn4l.onrender.com/api/auth";
-const CONTACTS_ROUTE = "https://velocity-gn4l.onrender.com/api/contacts";
+const BASE_URL = "https://velocity-gn4l.onrender.com/";
+const AUTH_ROUTE = BASE_URL + "api/auth";
+const CONTACTS_ROUTE = BASE_URL + "api/contacts";
+const MESSAGES_ROUTES = BASE_URL + "api/messages";
 
 export const UserLogin = async (email, password) => {
   try {
@@ -109,6 +111,26 @@ export const SearchContacts = async (token, searchTerm) => {
     return response;
   } catch (error) {
     console.log("Auth.js", { error });
+    return error.response;
+  }
+};
+
+export const GetMessages = async (token, chatUserID) => {
+  try {
+    const response = await axios.post(
+      MESSAGES_ROUTES + "/get-messages",
+      {
+        selectedUserID: chatUserID,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("GetMessages Auth.js", { error });
     return error.response;
   }
 };

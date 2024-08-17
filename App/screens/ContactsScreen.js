@@ -74,16 +74,18 @@ const ContactsScreen = ({ navigation }) => {
 
   async function handleSearchContacts(searchTerm) {
     try {
-    } catch (error) {}
-    if (searchTerm.length > 0) {
-      const response = await SearchContacts(authCtx.token, searchTerm);
-      if (response.status === 200 && response.data.contacts) {
-        setSearchedContacts(response.data.contacts);
+      if (searchTerm.length > 0) {
+        const response = await SearchContacts(authCtx.token, searchTerm);
+        if (response.status === 200 && response.data.contacts) {
+          setSearchedContacts(response.data.contacts);
+        } else {
+          Alert.alert("Something went wrong", response.data);
+        }
       } else {
-        Alert.alert("Something went wrong", response.data);
+        setSearchedContacts([]);
       }
-    } else {
-      setSearchedContacts([]);
+    } catch (error) {
+      console.log({ error });
     }
   }
   return (
