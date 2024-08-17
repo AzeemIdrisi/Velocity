@@ -12,6 +12,7 @@ import { AuthContext } from "../store/auth-context";
 import { GetMessages } from "../utils/auth";
 import MessageItem from "../components/UI/MessageItem";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
+import moment from "moment";
 
 const DMScreen = ({ navigation, route }) => {
   selectedContact = route.params.contact;
@@ -81,8 +82,21 @@ const DMScreen = ({ navigation, route }) => {
     });
   }, []);
 
+  let lastDate = null;
   function renderMessage(messageData) {
-    return <MessageItem message={messageData.item} />;
+    const messageDate = moment(messageData.item.timestamp).format("YYYY-MM-DD");
+    const showDate = !lastDate || messageDate !== lastDate;
+    lastDate = messageDate;
+    return (
+      <View>
+        {showDate && (
+          <Text className="text-center text-gray-500 my-2 w-full">
+            {moment(messageData.item.timestamp).format("LL")}
+          </Text>
+        )}
+        <MessageItem message={messageData.item} />
+      </View>
+    );
   }
 
   if (loading) return <LoadingOverlay>Connecting</LoadingOverlay>;
