@@ -171,7 +171,7 @@ const DMScreen = ({ navigation, route }) => {
   if (loading) return <LoadingOverlay>Connecting</LoadingOverlay>;
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior="position"
       className="flex-1 items-center justify-end"
       keyboardVerticalOffset={75}
     >
