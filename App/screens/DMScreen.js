@@ -6,7 +6,13 @@ import {
   KeyboardAvoidingView,
   FlatList,
 } from "react-native";
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AuthContext } from "../store/auth-context";
 import { GetMessages } from "../utils/auth";
@@ -20,12 +26,50 @@ const DMScreen = ({ navigation, route }) => {
   // console.log(selectedContact);
 
   const authCtx = useContext(AuthContext);
-  const userInfo = authCtx.userInfo;
   const socket = useContext(SocketContext);
 
+  const userInfo = authCtx.userInfo;
   const [loading, setLoading] = useState(true);
-  const chatMessages = authCtx.selectedChatMessages;
   const [message, setMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState([]);
+
+  const scrollRef = useRef();
+  useEffect(() => {
+    setTimeout(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollToEnd({ animated: true });
+      }
+    }, 100);
+  }, [chatMessages]);
+
+  const handleReceiveMessage = (message) => {
+    console.log("New Message Received");
+
+    if (
+      message.sender._id === userInfo.id ||
+      message.receiver._id === userInfo.id
+    ) {
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          ...message,
+          sender: message.sender._id,
+          receiver: message.receiver._id,
+        },
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("receiveMessage", handleReceiveMessage);
+
+      // Clean up the listener when the component unmounts
+      return () => {
+        socket.off("receiveMessage", handleReceiveMessage);
+      };
+    }
+  }, [socket]);
 
   useEffect(() => {
     console.log("useEffect is being called");
@@ -34,11 +78,16 @@ const DMScreen = ({ navigation, route }) => {
       try {
         const response = await GetMessages(authCtx.token, selectedContact._id);
         if (response.status === 200 && response.data.messages) {
-          authCtx.setSelectedChatMessages(response.data.messages);
+          setChatMessages(response.data.messages);
         } else {
           console.log({ response });
         }
         setLoading(false);
+        setTimeout(() => {
+          if (scrollRef.current) {
+            scrollRef.current.scrollToEnd({ animated: true });
+          }
+        }, 1000);
       } catch (error) {
         setLoading(false);
 
@@ -132,8 +181,9 @@ const DMScreen = ({ navigation, route }) => {
         renderItem={renderMessage}
         keyExtractor={(msg) => msg._id}
         extraData={chatMessages}
+        windowSize={10}
+        ref={scrollRef}
       />
-
       <View className="flex-row p-4 border-t-2 border-slate-200  py-5 mb-5">
         <TextInput
           className="border-2 border-slate-400 rounded-full flex-1 p-2 mr-2 h-10"

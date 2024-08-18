@@ -17,7 +17,7 @@ export const SocketProvider = ({ children }) => {
   const handleReceiveMessage = (message) => {
     const selectedChatMessages = authCtx.selectedChatMessages;
     if (selectedChatMessages !== undefined) {
-      console.log("New Message Received", { message });
+      console.log("New Message Received");
       authCtx.addMessage({
         ...message,
         sender: message.sender._id,

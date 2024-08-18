@@ -8,22 +8,12 @@ export const AuthContext = createContext({
   setUserInfo: () => {},
   token: null,
   setToken: () => {},
-  selectedChatMessages: [],
-  setSelectedChatMessages: () => {},
-  addMessage: () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState();
   const [token, setToken] = useState();
-  const [selectedChatMessages, setMessages] = useState([]);
 
-  function addMessage(msg) {
-    setMessages((prev) => [...prev, msg]);
-  }
-  function setSelectedChatMessages(messages) {
-    setMessages(messages);
-  }
   const setUserInformation = (userData) => {
     setUserInfo(userData);
   };
@@ -46,9 +36,6 @@ export const AuthContextProvider = ({ children }) => {
     setUserInfo: setUserInformation,
     token: token,
     setToken: setTokenInformation,
-    selectedChatMessages: selectedChatMessages,
-    setSelectedChatMessages: setSelectedChatMessages,
-    addMessage: addMessage,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
