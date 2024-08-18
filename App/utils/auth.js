@@ -134,3 +134,17 @@ export const GetMessages = async (token, chatUserID) => {
     return error.response;
   }
 };
+
+export const GetContactsForDM = async (token) => {
+  try {
+    const response = axios.get(`${CONTACTS_ROUTE}/get-contacts-for-dm`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("Get Contacts Auth.js", { error });
+    return error.response;
+  }
+};

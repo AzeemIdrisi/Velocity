@@ -72,7 +72,6 @@ const DMScreen = ({ navigation, route }) => {
   }, [socket]);
 
   useEffect(() => {
-    console.log("useEffect is being called");
     setLoading(true);
     async function getMessages() {
       try {
@@ -82,12 +81,12 @@ const DMScreen = ({ navigation, route }) => {
         } else {
           console.log({ response });
         }
-        setLoading(false);
         setTimeout(() => {
           if (scrollRef.current) {
             scrollRef.current.scrollToEnd({ animated: true });
           }
         }, 1000);
+        setLoading(false);
       } catch (error) {
         setLoading(false);
 

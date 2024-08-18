@@ -6,13 +6,13 @@ import {
   Alert,
   ScrollView,
   Platform,
+  FlatList,
 } from "react-native";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
-import ButtonX from "../components/UI/ButtonX";
 import { AuthContext } from "../store/auth-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Input from "../components/UI/Input";
-import { SearchContacts } from "../utils/auth";
+import { GetContactsForDM, SearchContacts } from "../utils/auth";
 import ContactItem from "../components/UI/ContactItem";
 
 const ContactsScreen = ({ navigation }) => {
@@ -20,6 +20,18 @@ const ContactsScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [searchedContacts, setSearchedContacts] = useState([]);
+  const [directMessagesContacts, setDirectMessagesContacts] = useState([]);
+
+  useEffect(() => {
+    async function getContacts() {
+      console.log("Getting contacts");
+      const response = await GetContactsForDM(authCtx.token);
+      if (response.status === 200 && response.data.contacts) {
+        setDirectMessagesContacts(response.data.contacts);
+      }
+    }
+    getContacts();
+  }, []);
 
   useEffect(() => {
     if (authCtx.userInfo) {
@@ -101,6 +113,18 @@ const ContactsScreen = ({ navigation }) => {
           color="gray"
         />
       </View>
+      {directMessagesContacts.length > 0 &&
+        directMessagesContacts.map((contact) => (
+          <ContactItem
+            key={contact._id}
+            contact={contact}
+            onPress={() => {
+              navigation.navigate("DMScreen", { contact: contact });
+              setModalVisible(false);
+              setSearchedContacts([]);
+            }}
+          />
+        ))}
       <Modal
         animationType="slide"
         // transparent={true}
