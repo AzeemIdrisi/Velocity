@@ -6,30 +6,35 @@ import {
   KeyboardAvoidingView,
   FlatList,
 } from "react-native";
-import React, { useContext, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AuthContext } from "../store/auth-context";
 import { GetMessages } from "../utils/auth";
 import MessageItem from "../components/UI/MessageItem";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
 import moment from "moment";
+import { SocketContext } from "../context/SocketContext";
 
 const DMScreen = ({ navigation, route }) => {
   selectedContact = route.params.contact;
   // console.log(selectedContact);
 
   const authCtx = useContext(AuthContext);
+  const userInfo = authCtx.userInfo;
+  const socket = useContext(SocketContext);
 
   const [loading, setLoading] = useState(true);
-  const [chatMessages, setChatMessages] = useState([]);
+  const chatMessages = authCtx.selectedChatMessages;
+  const [message, setMessage] = useState("");
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    console.log("useEffect is being called");
     setLoading(true);
     async function getMessages() {
       try {
         const response = await GetMessages(authCtx.token, selectedContact._id);
         if (response.status === 200 && response.data.messages) {
-          setChatMessages(response.data.messages);
+          authCtx.setSelectedChatMessages(response.data.messages);
         } else {
           console.log({ response });
         }
@@ -99,6 +104,21 @@ const DMScreen = ({ navigation, route }) => {
     );
   }
 
+  function handleSendMessage() {
+    if (socket) {
+      console.log("sending message");
+      if (message.length > 0)
+        socket.emit("sendMessage", {
+          sender: userInfo.id,
+          content: message,
+          receiver: selectedContact._id,
+          messageType: "text",
+          fileUrl: undefined,
+        });
+      setMessage("");
+    }
+  }
+
   if (loading) return <LoadingOverlay>Connecting</LoadingOverlay>;
   return (
     <KeyboardAvoidingView
@@ -111,6 +131,7 @@ const DMScreen = ({ navigation, route }) => {
         data={chatMessages}
         renderItem={renderMessage}
         keyExtractor={(msg) => msg._id}
+        extraData={chatMessages}
       />
 
       <View className="flex-row p-4 border-t-2 border-slate-200  py-5 mb-5">
@@ -118,9 +139,16 @@ const DMScreen = ({ navigation, route }) => {
           className="border-2 border-slate-400 rounded-full flex-1 p-2 mr-2 h-10"
           placeholder="Type your message"
           placeholderTextColor={"gray"}
+          value={message}
+          onChangeText={setMessage}
         />
         <View className="bg-blue-500 p-2 rounded-full">
-          <Ionicons name="send" size={24} color="white" />
+          <Ionicons
+            onPress={handleSendMessage}
+            name="send"
+            size={24}
+            color="white"
+          />
         </View>
       </View>
     </KeyboardAvoidingView>

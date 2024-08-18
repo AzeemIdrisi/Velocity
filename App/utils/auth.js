@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = "https://velocity-gn4l.onrender.com/";
-const AUTH_ROUTE = BASE_URL + "api/auth";
-const CONTACTS_ROUTE = BASE_URL + "api/contacts";
-const MESSAGES_ROUTES = BASE_URL + "api/messages";
+export const BASE_URL = "https://velocity-gn4l.onrender.com";
+const AUTH_ROUTE = BASE_URL + "/api/auth";
+const CONTACTS_ROUTE = BASE_URL + "/api/contacts";
+const MESSAGES_ROUTES = BASE_URL + "/api/messages";
 
 export const UserLogin = async (email, password) => {
   try {

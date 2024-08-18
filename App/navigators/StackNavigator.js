@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
 import ProfileScreen from "../screens/ProfileScreen";
 import DMScreen from "../screens/DMScreen";
+import { SocketProvider } from "../context/SocketContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,15 +27,17 @@ function AuthStack() {
 }
 function AuthenticatedStack() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTitleAlign: "center",
-      }}
-    >
-      <Stack.Screen name="Contacts" component={ContactsScreen} />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="DMScreen" component={DMScreen} />
-    </Stack.Navigator>
+    <SocketProvider>
+      <Stack.Navigator
+        screenOptions={{
+          headerTitleAlign: "center",
+        }}
+      >
+        <Stack.Screen name="Contacts" component={ContactsScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="DMScreen" component={DMScreen} />
+      </Stack.Navigator>
+    </SocketProvider>
   );
 }
 
