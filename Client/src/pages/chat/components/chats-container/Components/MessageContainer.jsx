@@ -17,9 +17,9 @@ function MessageContainer() {
   const {
     selectedChatType,
     selectedChatData,
-    userInfo,
     selectedChatMessages,
     setSelectedChatMessages,
+    userInfo,
     setFileDownloadProgress,
     setIsDownloading,
   } = useAppStore();
@@ -62,7 +62,7 @@ function MessageContainer() {
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behaviou: "smooth" });
+      scrollRef.current.scrollIntoView({ behaviour: "smooth" });
     }
   }, [selectedChatMessages]);
 
