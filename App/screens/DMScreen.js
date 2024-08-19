@@ -177,8 +177,11 @@ const DMScreen = ({ navigation, route }) => {
     keyboardDidShowListener.current = Keyboard.addListener(
       "keyboardDidShow",
       (e) => {
-        scrollRef.current?.scrollTo({
-          y: e.endCoordinates.height + 100,
+        // scrollRef.current?.scrollTo({
+        //   y: e.endCoordinates.height + 100,
+        //   animated: true,
+        // });
+        scrollRef.current?.scrollToEnd({
           animated: true,
         });
       }
@@ -186,7 +189,7 @@ const DMScreen = ({ navigation, route }) => {
     keyboardDidHideListener.current = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        scrollRef.current?.scrollTo({ y: 100, animated: true });
+        scrollRef.current?.scrollToEnd({ animated: true });
       }
     );
 
@@ -204,11 +207,7 @@ const DMScreen = ({ navigation, route }) => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 75 : 0}
     >
       {chatMessages.length > 0 && (
-        <ScrollView
-          ref={scrollRef}
-          className="w-full flex-1"
-          adjustResize={Platform.OS === "android" ? "resize" : undefined}
-        >
+        <ScrollView ref={scrollRef} className="w-full flex-1">
           {chatMessages.map((messageData) => {
             const messageDate = moment(messageData.timestamp).format(
               "YYYY-MM-DD"
