@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   FlatList,
   Platform,
+  ScrollView,
 } from "react-native";
 import React, {
   useContext,
@@ -176,15 +177,27 @@ const DMScreen = ({ navigation, route }) => {
       className="flex-1 items-center justify-end"
       keyboardVerticalOffset={Platform.OS === "ios" ? 75 : 0}
     >
-      <FlatList
-        className="w-full"
-        data={chatMessages}
-        renderItem={renderMessage}
-        keyExtractor={(msg) => msg._id}
-        extraData={chatMessages}
-        windowSize={10}
-        ref={scrollRef}
-      />
+      {chatMessages.length > 0 && (
+        <ScrollView ref={scrollRef} className="w-full flex-1">
+          {chatMessages.map((messageData) => {
+            const messageDate = moment(messageData.timestamp).format(
+              "YYYY-MM-DD"
+            );
+            const showDate = !lastDate || messageDate !== lastDate;
+            lastDate = messageDate;
+            return (
+              <View key={messageData._id}>
+                {showDate && (
+                  <Text className="text-center text-gray-500 my-2 w-full">
+                    {moment(messageData.timestamp).format("LL")}
+                  </Text>
+                )}
+                <MessageItem message={messageData} />
+              </View>
+            );
+          })}
+        </ScrollView>
+      )}
       <View className="flex-row p-4 border-t-2 border-slate-200  py-5 mb-5">
         <TextInput
           className="border-2 border-slate-400 rounded-full flex-1 p-2 mr-2 h-10"
