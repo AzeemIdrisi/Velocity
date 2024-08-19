@@ -5,6 +5,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   FlatList,
+  Platform,
 } from "react-native";
 import React, {
   useContext,
@@ -124,6 +125,7 @@ const DMScreen = ({ navigation, route }) => {
           </View>
         );
       },
+      headerBackVisible: false,
       headerLeft: () => (
         <Ionicons
           name="chevron-back"
@@ -172,7 +174,7 @@ const DMScreen = ({ navigation, route }) => {
     <KeyboardAvoidingView
       behavior="position"
       className="flex-1 items-center justify-end"
-      keyboardVerticalOffset={75}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 75 : 0}
     >
       <FlatList
         className="w-full"
