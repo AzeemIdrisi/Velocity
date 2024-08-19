@@ -7,6 +7,7 @@ import {
   FlatList,
   Platform,
   ScrollView,
+  Keyboard,
 } from "react-native";
 import React, {
   useContext,
@@ -170,15 +171,44 @@ const DMScreen = ({ navigation, route }) => {
     }
   }
 
+  const keyboardDidShowListener = useRef();
+  const keyboardDidHideListener = useRef();
+  useEffect(() => {
+    keyboardDidShowListener.current = Keyboard.addListener(
+      "keyboardDidShow",
+      (e) => {
+        scrollRef.current?.scrollTo({
+          y: e.endCoordinates.height + 100,
+          animated: true,
+        });
+      }
+    );
+    keyboardDidHideListener.current = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        scrollRef.current?.scrollTo({ y: 100, animated: true });
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.current?.remove();
+      keyboardDidHideListener.current?.remove();
+    };
+  }, []);
+
   if (loading) return <LoadingOverlay>Connecting</LoadingOverlay>;
   return (
     <KeyboardAvoidingView
-      behavior="position"
+      behavior={Platform.OS === "ios" ? "position" : "padding"}
       className="flex-1 items-center justify-end"
       keyboardVerticalOffset={Platform.OS === "ios" ? 75 : 0}
     >
       {chatMessages.length > 0 && (
-        <ScrollView ref={scrollRef} className="w-full flex-1">
+        <ScrollView
+          ref={scrollRef}
+          className="w-full flex-1"
+          adjustResize={Platform.OS === "android" ? "resize" : undefined}
+        >
           {chatMessages.map((messageData) => {
             const messageDate = moment(messageData.timestamp).format(
               "YYYY-MM-DD"
