@@ -113,18 +113,22 @@ const ContactsScreen = ({ navigation }) => {
           color="gray"
         />
       </View>
-      {directMessagesContacts.length > 0 &&
-        directMessagesContacts.map((contact) => (
+      <FlatList
+        className="mb-20"
+        data={directMessagesContacts}
+        renderItem={({ item }) => (
           <ContactItem
-            key={contact._id}
-            contact={contact}
+            key={item?._id}
+            contact={item}
             onPress={() => {
-              navigation.navigate("DMScreen", { contact: contact });
+              navigation.navigate("DMScreen", { contact: item });
               setModalVisible(false);
               setSearchedContacts([]);
             }}
           />
-        ))}
+        )}
+      />
+
       <Modal
         animationType="slide"
         // transparent={true}
